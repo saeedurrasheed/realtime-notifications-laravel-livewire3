@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Livewire\Posts\CreatePost;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
@@ -29,6 +30,14 @@ Livewire::setUpdateRoute(function ($handle) {
 });
 Livewire::setScriptRoute(function ($handle) {
     return Route::get('/realtime-notifications-laravel/public/livewire/livewire.js', $handle);
+});
+
+Route::middleware(['auth'])
+    ->group(static function () {
+
+    Route::group(['prefix' => 'post'], static function () {
+        Route::view('/', 'admin.posts.index')->name('admin.posts.index');
+    });
 });
 
 Route::middleware('auth')->group(function () {
